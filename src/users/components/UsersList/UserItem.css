@@ -1,0 +1,52 @@
+.user__list{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  row-gap: .5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  transition: all .2s;
+  column-gap: 1rem;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  -webkit-box-shadow: -11px 9px 80px -24px rgba(0,0,0,0.75);
+  -moz-box-shadow: -11px 9px 80px -24px rgba(0,0,0,0.75);
+  box-shadow: -11px 9px 80px -24px rgba(0,0,0,0.75);
+  width: 22%;
+}
+.user__list:hover{
+  background-color: hsl(44, 74%, 52%);
+  color: black;
+  
+}
+.user__places{
+  font-size: .9rem;
+  font-weight: 600;
+}
+.user__name{
+  font-weight: 700;
+  /* color: white; */
+  font-size: 1rem;
+  
+}
+.user__name:hover{
+  color:white;
+}
+
+@media (max-width: 768px) {
+  .user__list{
+    width: 30%;
+  }
+}
+@media (max-width: 550px) {
+  .user__list{
+    width: 40%;
+  }
+}
+
+@media (max-width: 420px) {
+  .user__list{
+    width: 50%;
+  }
+}

@@ -1,0 +1,28 @@
+.side-drawer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  height: 100vh;
+  width: 70%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.slide-in-left-enter{
+  margin-left: -50%;
+}
+.slide-in-left-enter-active{
+  margin-left: 0%;
+  transition: all 200ms;
+}
+
+.slide-in-left-exit{
+  margin-left: 0%;
+  opacity: 1;
+}
+.slide-in-left-exit-active{
+  margin-left: -50%;
+  opacity: 0;
+  transition: all 200ms;
+}
