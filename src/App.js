@@ -5,11 +5,12 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
+import { ChakraProvider, extendTheme, Container } from '@chakra-ui/react';
 import Users from './users/pages/Users';
 import NewPlaces from './places/pages/NewPlaces/NewPlaces';
-import { ChakraProvider, extendTheme, Container } from '@chakra-ui/react';
 import MainNavigation from './shared/components/Navigation/MainNavigation/MainNavigation';
 import UserPlaces from './places/pages/UserPlaces/UserPlaces';
+import UpdatePlace from './places/pages/UpdatePlace/UpdatePlace';
 const colors = {
   brand: {
     900: '#75cfb8',
@@ -31,7 +32,8 @@ const App = () => {
               <Route path="/" exact component={Users} />
               <Route path="/places/new" exact component={NewPlaces} />
               <Route path="/:userId/places" exact component={UserPlaces} />
-              <Redirect to="/" />
+              <Route path="/places/:placeId" exact component={UpdatePlace} />
+              {/* <Redirect to="/" /> */}
             </Switch>
           </main>
         </Router>

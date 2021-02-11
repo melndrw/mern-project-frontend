@@ -17,9 +17,7 @@ const Map = (props) => {
           accessToken={process.env.REACT_APP_MAP_TOKEN}
         />
         <Marker position={[props.coordinates.lat, props.coordinates.lng]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
+          <Popup>{props.address}</Popup>
         </Marker>
       </MapContainer>
     </div>

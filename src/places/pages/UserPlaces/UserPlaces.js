@@ -23,8 +23,7 @@ const items = [
     description: 'The Father of Philippine Revolutionary',
     image:
       'https://thumbs.dreamstime.com/b/manila-ph-oct-andres-bonifacio-shrine-october-philippines-shows-life-story-philippine-hero-his-childhood-to-181008649.jpg',
-    address:
-      'Liwasang Bonifacio, Ermita, Maynila, Kalakhang MaynilaRizal Monument, Burgos Street, Calamba, Laguna',
+    address: 'Liwasang Bonifacio, Ermita, Maynila',
     coordinates: {
       lat: 14.5945523,
       lng: 120.979409,

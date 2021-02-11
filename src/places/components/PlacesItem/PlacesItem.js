@@ -20,7 +20,7 @@ const PlacesItem = ({ item }) => {
         footer={<Button onClick={() => setShowMap(false)}>Close</Button>}
       >
         <div className="map-container">
-          <Map coordinates={item.coordinates} />
+          <Map coordinates={item.coordinates} address={item.address} />
         </div>
       </Modal>
       <li className="place-item">
@@ -37,7 +37,7 @@ const PlacesItem = ({ item }) => {
             <Button onClick={() => setShowMap(true)} inverse>
               VIEW ON MAP
             </Button>
-            <Button to={`/places.${item.id}`}>EDIT</Button>
+            <Button to={`/places/${item.id}`}>EDIT</Button>
             <Button danger>DELETE</Button>
           </div>
         </Card>

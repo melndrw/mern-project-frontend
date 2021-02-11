@@ -1,17 +1,17 @@
 import React from 'react';
 import './PlacesList.css';
-import { Button } from '@chakra-ui/react';
 import Card from '../../../shared/components/UIElements/Card/Card';
+import Button from '../../../shared/components/FormElements/Button/Button';
 import PlacesItem from '../PlacesItem/PlacesItem';
 
 const PlacesList = ({ items }) => {
   if (items.length === 0) {
     return (
-      <div className="place-list">
+      <div className="place-list center">
         <Card>
           <h2>No place found, Maybe create one?</h2>
+          <Button to="/places/new">Share Places</Button>
         </Card>
-        <Button>Share Places</Button>
       </div>
     );
   }
