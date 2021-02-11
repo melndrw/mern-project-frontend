@@ -39,7 +39,14 @@
     display: none;
   }
 
+
   .main-navigation__header-nav {
     display: block;
+  }
+  
+}
+@media (max-width:768px){
+  .main-navigation__head{
+    display: none;
   }
 }

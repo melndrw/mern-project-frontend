@@ -2,7 +2,7 @@ import React from 'react';
 import './UsersList.css';
 import { Center } from '@chakra-ui/react';
 import UserItem from './UserItem';
-import Card from '../../../shared/components/Card/Card';
+import Card from '../../../shared/components/UIElements/Card/Card';
 
 const UsersList = ({ users }) => {
   if (users.length === 0) {

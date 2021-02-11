@@ -1,5 +1,6 @@
 import React from 'react';
 import UsersList from '../components/UsersList/UsersList';
+import Map from '../../shared/components/UIElements/Map/Map';
 
 const Users = () => {
   const users = [

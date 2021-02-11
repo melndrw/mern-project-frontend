@@ -4,7 +4,7 @@ import MainHeader from '../MainHeader/MainHeader';
 import { Link } from 'react-router-dom';
 import NavLinks from '../NavLinks/NavLinks';
 import SideDrawer from '../SideDrawer/SideDrawer';
-import Backdrop from '../../BackDrop/Backdrop';
+import Backdrop from '../../UIElements/BackDrop/Backdrop';
 
 const MainNavigation = () => {
   const [isDrawer, setIsDrawer] = useState(false);
@@ -28,7 +28,7 @@ const MainNavigation = () => {
         <h1 className="main-navigation__title">
           <Link to="/">YourPlaces</Link>
         </h1>
-        <nav>
+        <nav className="main-navigation__head">
           <NavLinks />
         </nav>
       </MainHeader>
