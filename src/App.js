@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,6 +11,9 @@ import NewPlaces from './places/pages/NewPlaces/NewPlaces';
 import MainNavigation from './shared/components/Navigation/MainNavigation/MainNavigation';
 import UserPlaces from './places/pages/UserPlaces/UserPlaces';
 import UpdatePlace from './places/pages/UpdatePlace/UpdatePlace';
+import Authenticate from './users/pages/Authentication/Authenticate';
+import { AuthContext } from './shared/context/auth-context';
+
 const colors = {
   brand: {
     900: '#75cfb8',
@@ -22,21 +25,51 @@ const colors = {
 const theme = extendTheme({ colors });
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
+  let routes;
+
+  if (!isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route path="/" exact component={Users} />
+        <Route path="/:userId/places" exact component={UserPlaces} />
+        <Route path="/auth" exact component={Authenticate} />
+        <Redirect to="/auth" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact component={Users} />
+        <Route path="/:userId/places" exact component={UserPlaces} />
+
+        <Route path="/places/new" exact component={NewPlaces} />
+        <Route path="/places/:placeId" exact component={UpdatePlace} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <Container maxWidth="100%">
-        <Router>
-          <MainNavigation />
-          <main>
-            <Switch>
-              <Route path="/" exact component={Users} />
-              <Route path="/places/new" exact component={NewPlaces} />
-              <Route path="/:userId/places" exact component={UserPlaces} />
-              <Route path="/places/:placeId" exact component={UpdatePlace} />
-              {/* <Redirect to="/" /> */}
-            </Switch>
-          </main>
-        </Router>
+        <AuthContext.Provider
+          value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+        >
+          <Router>
+            <MainNavigation />
+            <main>{routes}</main>
+          </Router>
+        </AuthContext.Provider>
       </Container>
     </ChakraProvider>
   );

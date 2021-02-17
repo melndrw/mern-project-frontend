@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import UsersList from '../components/UsersList/UsersList';
-import Map from '../../shared/components/UIElements/Map/Map';
+import { getSample } from '../../services/Server/PlaceServices';
 
 const Users = () => {
   const users = [
@@ -19,6 +19,9 @@ const Users = () => {
       places: 1,
     },
   ];
+  useEffect(() => {
+    getSample(2).then((data) => console.log(data));
+  }, []);
   return (
     <>
       <UsersList users={users} />
