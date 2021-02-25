@@ -4,7 +4,7 @@ import Card from '../../../shared/components/UIElements/Card/Card';
 import Button from '../../../shared/components/FormElements/Button/Button';
 import PlacesItem from '../PlacesItem/PlacesItem';
 
-const PlacesList = ({ items }) => {
+const PlacesList = ({ items, onDeletePlace }) => {
   if (items.length === 0) {
     return (
       <div className="place-list center">
@@ -18,7 +18,7 @@ const PlacesList = ({ items }) => {
   return (
     <div className="place-list center">
       {items.map((item, idx) => (
-        <PlacesItem key={idx} item={item} />
+        <PlacesItem onDelete={onDeletePlace} key={idx} item={item} />
       ))}
     </div>
   );

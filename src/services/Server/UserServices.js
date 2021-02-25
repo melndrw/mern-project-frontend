@@ -7,9 +7,6 @@ const request = axios.create({
   },
 });
 
-export const getPlacesRequest = (id) => {
-  return request
-    .get(`/api/places/user/${id}`)
-    .then((res) => res)
-    .catch((err) => console.log(err));
+export const getUsersRequest = () => {
+  return request.get('/api/user/').then((res) => res.data);
 };

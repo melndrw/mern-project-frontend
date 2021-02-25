@@ -11,7 +11,7 @@ const UserItem = ({ data }) => {
           objectFit="cover"
           borderRadius="100%"
           boxSize={65}
-          src={data.image}
+          src={`http://localhost:5000/${data.image}`}
           alt={data.name}
         />
         <div className="user__content">
@@ -19,7 +19,7 @@ const UserItem = ({ data }) => {
             <Link to={`/${data.id}/places`}>{data.name}</Link>
           </p>
           <p className="user__places">
-            {data.places} {data.places > 1 ? 'Places' : 'Place'}
+            {data.places.length} {data.places.length > 1 ? 'Places' : 'Place'}
           </p>
         </div>
       </Box>

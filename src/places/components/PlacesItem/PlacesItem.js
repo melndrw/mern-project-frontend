@@ -1,15 +1,22 @@
 import React, { useState, useContext } from 'react';
 import './PlacesItem.css';
 import { Image } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
+
+import LoadingSpinner from '../../../shared/components/UIElements/Spinner/LoadingSpinner';
+import ErrorModal from '../../../shared/components/UIElements/Modal/ErrorModal';
+import { useHttpClient } from '../../../shared/hooks/http-hook';
 import Card from '../../../shared/components/UIElements/Card/Card';
 import Button from '../../../shared/components/FormElements/Button/Button';
 import Modal from '../../../shared/components/UIElements/Modal/Modal';
 import Map from '../../../shared/components/UIElements/Map/Map';
 import { AuthContext } from '../../../shared/context/auth-context';
 
-const PlacesItem = ({ item }) => {
+const PlacesItem = ({ item, onDelete }) => {
+  console.log(item);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
 
   const showDeleteWarningHandler = () => {
@@ -18,12 +25,24 @@ const PlacesItem = ({ item }) => {
   const cancelDeleteHandler = () => {
     setShowConfirmModal(false);
   };
-  const confirmDeleteHandler = () => {
-    console.log('Deleting...');
+  const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
+    try {
+      await sendRequest(
+        `${process.env.REACT_APP_BASE_URL}api/places/${item.id}`,
+        'DELETE',
+        null,
+        {
+          'Content-Type': 'application/json',
+        }
+      );
+    } catch (error) {}
+    onDelete(item.id);
   };
   return (
-    <o>
+    <>
+      {isLoading && <LoadingSpinner asOverLay />}
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showMap}
         header={item.address}
@@ -33,7 +52,7 @@ const PlacesItem = ({ item }) => {
         footer={<Button onClick={() => setShowMap(false)}>Close</Button>}
       >
         <div className="map-container">
-          <Map coordinates={item.coordinates} address={item.address} />
+          <Map coordinates={item.location} address={item.address} />
         </div>
       </Modal>
       <Modal
@@ -60,7 +79,10 @@ const PlacesItem = ({ item }) => {
       <li className="place-item">
         <Card className="place-item__content">
           <div className="place-item__image">
-            <Image src={item.image} alt={item.title} />
+            <Image
+              src={`http://localhost:5000/${item.placeImage}`}
+              alt={item.title}
+            />
           </div>
           <div className="place-item__info">
             <h2>{item.title}</h2>
@@ -71,7 +93,7 @@ const PlacesItem = ({ item }) => {
             <Button onClick={() => setShowMap(true)} inverse>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn && (
+            {item.creator === auth.userId && (
               <>
                 <Button to={`/places/${item.id}`}>EDIT</Button>
                 <Button onClick={showDeleteWarningHandler} danger>
@@ -82,7 +104,7 @@ const PlacesItem = ({ item }) => {
           </div>
         </Card>
       </li>
-    </o>
+    </>
   );
 };
 
