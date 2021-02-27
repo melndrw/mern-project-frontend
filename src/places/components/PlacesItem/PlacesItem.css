@@ -1,5 +1,6 @@
 .place-item {
   margin: 1rem 0;
+  width: 40%;
 }
 
 .place-item__content {
@@ -57,4 +58,9 @@
   .place-item__image {
     height: 20rem;
   } 
+}
+@media(max-width:768px){
+  .place-item{
+    width: 80%;
+  }
 }

@@ -4,3 +4,8 @@
 .userList__noFound{
   margin-top: 1.5rem;
 }
+.user__image{
+  border-radius: 100%;
+  width: 65px;
+  height: 4rem;
+}

@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { lazy, Suspense } from 'react';
+import './App.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,12 +8,19 @@ import {
 } from 'react-router-dom';
 import { ChakraProvider, extendTheme, Container } from '@chakra-ui/react';
 import Users from './users/pages/Users';
-import NewPlaces from './places/pages/NewPlaces/NewPlaces';
 import MainNavigation from './shared/components/Navigation/MainNavigation/MainNavigation';
-import UserPlaces from './places/pages/UserPlaces/UserPlaces';
-import UpdatePlace from './places/pages/UpdatePlace/UpdatePlace';
-import Authenticate from './users/pages/Authentication/Authenticate';
 import { AuthContext } from './shared/context/auth-context';
+import { useAuth } from './shared/hooks/auth-hooks';
+import LoadingSpinner from './shared/components/UIElements/Spinner/LoadingSpinner';
+
+const NewPlaces = lazy(() => import('./places/pages/NewPlaces/NewPlaces'));
+const UserPlaces = lazy(() => import('./places/pages/UserPlaces/UserPlaces'));
+const UpdatePlace = lazy(() =>
+  import('./places/pages/UpdatePlace/UpdatePlace')
+);
+const Authenticate = lazy(() =>
+  import('./users/pages/Authentication/Authenticate')
+);
 
 const colors = {
   brand: {
@@ -25,22 +33,11 @@ const colors = {
 const theme = extendTheme({ colors });
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setuserId] = useState();
-
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
-    setuserId(uid);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-    setuserId(null);
-  }, []);
+  const { token, userId, login, logout } = useAuth();
 
   let routes;
 
-  if (!isLoggedIn) {
+  if (!token) {
     routes = (
       <Switch>
         <Route path="/" exact component={Users} />
@@ -67,7 +64,8 @@ const App = () => {
       <Container maxWidth="100%">
         <AuthContext.Provider
           value={{
-            isLoggedIn: isLoggedIn,
+            isLoggedIn: !!token,
+            token: token,
             userId: userId,
             login: login,
             logout: logout,
@@ -75,7 +73,17 @@ const App = () => {
         >
           <Router>
             <MainNavigation />
-            <main>{routes}</main>
+            <main>
+              <Suspense
+                fallback={
+                  <div className="center">
+                    <LoadingSpinner asOverlay />
+                  </div>
+                }
+              >
+                {routes}
+              </Suspense>
+            </main>
           </Router>
         </AuthContext.Provider>
       </Container>

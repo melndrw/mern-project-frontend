@@ -55,9 +55,12 @@ const NewPlaces = () => {
       formData.append('placeImage', formState.inputs.placeImage.value);
       formData.append('creator', auth.userId);
       await sendRequest(
-        `${process.env.REACT_APP_BASE_URL}api/places`,
+        `${process.env.REACT_APP_BASE_URL}/places`,
         'POST',
-        formData
+        formData,
+        {
+          Authorization: `Bearer ${auth.token}`,
+        }
       );
       history.push('/');
     } catch (error) {}

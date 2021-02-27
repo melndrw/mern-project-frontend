@@ -8,7 +8,7 @@ const Map = (props) => {
     <div className={`map ${props.className}`} style={props.style}>
       <MapContainer
         center={[props.coordinates.lat, props.coordinates.lng]}
-        zoom={13}
+        zoom={15}
         scrollWheelZoom={false}
       >
         <TileLayer

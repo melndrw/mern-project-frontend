@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import './PlacesItem.css';
-import { Image } from '@chakra-ui/react';
-import { useHistory } from 'react-router-dom';
 
 import LoadingSpinner from '../../../shared/components/UIElements/Spinner/LoadingSpinner';
 import ErrorModal from '../../../shared/components/UIElements/Modal/ErrorModal';
@@ -29,15 +27,16 @@ const PlacesItem = ({ item, onDelete }) => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
-        `${process.env.REACT_APP_BASE_URL}api/places/${item.id}`,
+        `${process.env.REACT_APP_BASE_URL}/places/${item.id}`,
         'DELETE',
         null,
         {
+          Authorization: `Bearer ${auth.token}`,
           'Content-Type': 'application/json',
         }
       );
+      onDelete(item.id);
     } catch (error) {}
-    onDelete(item.id);
   };
   return (
     <>
@@ -79,8 +78,8 @@ const PlacesItem = ({ item, onDelete }) => {
       <li className="place-item">
         <Card className="place-item__content">
           <div className="place-item__image">
-            <Image
-              src={`http://localhost:5000/${item.placeImage}`}
+            <img
+              src={`${process.env.REACT_APP_ASSET_URL}/${item.placeImage}`}
               alt={item.title}
             />
           </div>

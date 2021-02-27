@@ -43,7 +43,7 @@ const Authenticate = () => {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BASE_URL}api/user/login`,
+          `${process.env.REACT_APP_BASE_URL}/user/login`,
           'POST',
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -53,7 +53,7 @@ const Authenticate = () => {
             'Content-Type': 'application/json',
           }
         );
-        auth.login(responseData.user.id);
+        auth.login(responseData.user.userId, responseData.user.token);
       } catch (error) {}
     } else {
       try {
@@ -63,11 +63,11 @@ const Authenticate = () => {
         formData.append('password', formState.inputs.password.value);
         formData.append('image', formState.inputs.image.value);
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BASE_URL}api/user/signup`,
+          `${process.env.REACT_APP_BASE_URL}/user/signup`,
           'POST',
           formData
         );
-        auth.login(responseData.user.id);
+        auth.login(responseData.user.userId, responseData.user.token);
       } catch (error) {}
     }
   };
